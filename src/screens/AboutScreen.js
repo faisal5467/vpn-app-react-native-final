@@ -3,12 +3,19 @@ import React from 'react'
 
 const AboutScreen = () => {
   return (
-    <View>
-      <Text>AboutScreen</Text>
+   
+      <View style={styles.container}>
+            <Text style={styles.title}>About Us</Text>
+            <Text style={styles.subtitle}>Regularly changing passwords boosts security</Text>
     </View>
   )
 }
 
 export default AboutScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1c161b',
+  },
+})
