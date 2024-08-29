@@ -108,34 +108,7 @@ const HomeScreen = ({route}) => {
   }, [route.params?.selectedLocation]);
   return (
     <View style={styles.container}>
-      {/* {isModalVisible && (
-        <BlurView
-          style={styles.Blueabsolute}
-          blurType="light"
-          blurAmount={20}
-          reducedTransparencyFallbackColor="white"
-        />
-      )}
-      <Modal
-        visible={isModalVisible}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setIsModalVisible(false)}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Do you want to disconnect?</Text>
-            <View style={styles.modalButtons}>
-              <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-                <Text style={styles.cancelButton}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={confirmDisconnect}>
-                <Text style={styles.disconnectButton}>Disconnect</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal> */}
-
+  
       <ImageBackground source={Images.Maps} style={styles.drawerBackground}>
         {/* <View style={styles.header}> */}
 
@@ -153,7 +126,6 @@ const HomeScreen = ({route}) => {
           rightComponent={<Icon name="star" size={30} color="white" />}
         />
         <View style={styles.locationContainer}>
-          {/* <Flag code="GB" size={32} /> */}
 
           <CountryFlag isoCode={location.flag} size={32} />
 
@@ -172,7 +144,7 @@ const HomeScreen = ({route}) => {
   
         <View style={styles.timerContainer}>
           <Text style={styles.timerText}>01 : 25 : 40</Text>
-          <Text style={styles.ipText}>Your IP : 51.77.108.159</Text>
+          <Text style={styles.ipText}>Your IP : 291.55.108.213</Text>
         </View>
         <View style={styles.animationWrapper}>
                 <Animated.View style={[styles.progressCircle, animatedStyle]} />
