@@ -6,7 +6,7 @@ const AboutScreen = () => {
    
       <View style={styles.container}>
             <Text style={styles.title}>About Us</Text>
-            <Text style={styles.subtitle}>Regularly changing passwords boosts security</Text>
+            <Text style={styles.subtitle}>Regularly changing passwords boosts security for you privacy</Text>
     </View>
   )
 }
