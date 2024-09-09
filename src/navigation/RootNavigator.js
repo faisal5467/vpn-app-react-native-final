@@ -35,7 +35,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/AuthScreen/LoginScreen';
 import SignupScreen from '../screens/AuthScreen/SignupScreen';
 import ForgotPasswordScreen from '../screens/AuthScreen/ForgotPasswordScreen';
-import OTPVerificationScreen from '../screens/AuthScreen/OTPVerificationScreen';
+// import OTPVerificationScreen from '../screens/AuthScreen/OTPVerificationScreen';
 
 const Stack = createNativeStackNavigator();
 
