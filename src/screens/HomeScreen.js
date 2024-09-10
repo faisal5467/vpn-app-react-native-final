@@ -143,8 +143,8 @@ const HomeScreen = ({route}) => {
         </TouchableOpacity>
   
         <View style={styles.timerContainer}>
-          <Text style={styles.timerText}>05 : 10 : 58</Text>
-          <Text style={styles.ipText}>Your IP : 291.55.108.213</Text>
+          <Text style={styles.timerText}>05 : 10 : 25</Text>
+          <Text style={styles.ipText}>Your IP : 221.52.108.213</Text>
         </View>
         <View style={styles.animationWrapper}>
                 <Animated.View style={[styles.progressCircle, animatedStyle]} />
@@ -187,11 +187,11 @@ const HomeScreen = ({route}) => {
             <View style={styles.speedContainer}>
               <View style={styles.speedBox}>
                 <Icon name="arrow-downward" size={20} color="white" />
-                <Text style={styles.speedText}>31.5 MB/s</Text>
+                <Text style={styles.speedText}>19.5 MB/s</Text>
               </View>
               <View style={styles.speedBox}>
                 <Icon name="arrow-upward" size={20} color="white" />
-                <Text style={styles.speedText}>17.2 MB/s</Text>
+                <Text style={styles.speedText}>11.2 MB/s</Text>
               </View>
             </View>
           ) : (
