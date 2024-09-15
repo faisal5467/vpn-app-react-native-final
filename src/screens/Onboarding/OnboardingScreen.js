@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 const Dots = ({ selected }) => {
     let backgroundColor;
 
-    backgroundColor = selected ? 'rgba(255, 165, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)';
+    backgroundColor = selected ? 'rgba(255, 165, 0, 0.7)' : 'rgba(0, 0, 0, 0.3)';
 
     return (
         <View
