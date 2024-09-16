@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView , TouchableOpacity, Image} from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Images from '../constant/Images';
+import Images from '../constants/Image';
+
 
 const HelpDetailScreen = ({ route, navigation }) => {
     const { question, answer } = route.params;

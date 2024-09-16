@@ -8,7 +8,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
     const handleSendOTP = () => {
         navigation.navigate('OTPVerificationScreen')
     };
-
+ 
     return (
         <KeyboardAvoidingView 
             style={styles.container} 
