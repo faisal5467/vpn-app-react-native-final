@@ -1,23 +1,5 @@
-// import { StyleSheet, Text, View, Button } from 'react-native'
-// import React from 'react'
-// import { useNavigation } from '@react-navigation/native';
-// const HomeScreen = () => {
-//   const navigation = useNavigation();
-//   return (
-//     <View>
-//       <Text>Home Screen</Text>
-//       <Button title="Go to Products" onPress={() => navigation.navigate('ProductScreen')} />
-//     </View>
-//   )
-// }
 
-// export default HomeScreen
-
-// const styles = StyleSheet.create({})
-
-////////////////////
-
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -28,13 +10,29 @@ import {
   Modal,
   Animated, Easing 
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Images from '../constant/Images';
+
 import {useNavigation} from '@react-navigation/native';
-import {BlurView} from '@react-native-community/blur';
 import CustomHeader from '../components/CustomHeader';
 import CountryFlag from 'react-native-country-flag';
-import CustomModal from '../components/CustomModal';
+import CustomModal from '../components/CustomModal'
+import Button from '../components/Button';
+import Images from '../constants/Image';
+
+import {
+  NativeModules,
+  NativeEventEmitter,
+  DeviceEventEmitter,
+} from "react-native";
+
+import Papa from "papaparse";
+import { useIsFocused } from "@react-navigation/native";
+const { VpnServiceModule, MainActivity } = NativeModules;
+import { Buffer } from "buffer"; // Make sure to install buffer with `npm install buffer`
+
+const decodeBase64 = (base64String) => {
+  const buffer = Buffer.from(base64String, "base64");
+  return buffer.toString("utf-8");
+};
 
 const HomeScreen = ({route}) => {
   // const locationselect =  route.params
@@ -44,10 +42,89 @@ const HomeScreen = ({route}) => {
   //   setIsConnected(!isConnected);
   // };
 
-
-  
   const [modalVisible, setModalVisible] = useState(false);
   const progress = useRef(new Animated.Value(0)).current;
+  const [location, setLocation] = useState(null);
+
+
+    const [vpnState, setVpnState] = useState("disconnected");
+  const [vpnList, setVpnList] = useState([]);
+  const [selectedVpn, setSelectedVpn] = useState(null);
+  const [vpnStatus, setVpnStatus] = useState("");
+  useEffect(() => {
+    // Initialize VPNs
+    initVpn();
+    const vpnStateListener = DeviceEventEmitter.addListener(
+      "VpnStage",
+      (stage) => {
+        setVpnState(stage.stage.toLowerCase());
+      }
+    );
+    const vpnStatusSubscription = DeviceEventEmitter.addListener(
+      "VpnStatus",
+      (event) => {
+        setVpnStatus(`${event.byte_in || ""}, ${event.byte_out || ""}`);
+      }
+    );
+
+    return () => {
+      vpnStateListener.remove();
+      vpnStatusSubscription.remove();
+    };
+  }, []);
+
+  const initVpn = async () => {
+    const vpnList = [
+      {
+        country: "Japan",
+        username: "vpn",
+        password: "vpn",
+        // config: await fetchConfigFile('japan.ovpn'),
+      },
+      // {
+      //   country: 'Thailand',
+      //   username: 'vpn',
+      //   password: 'vpn',
+      //   config: await fetchConfigFile(),
+      // },
+    ];
+    setVpnList(vpnList);
+    // setSelectedVpn(vpnList[0]);
+  };
+
+
+
+
+  const startVpn = async () => {
+    if (selectedVpn == null) return;
+    // const config = decodeBase64(selectedVpn.OpenVPN_ConfigData_Base64);
+    console.log("-----------", selectedVpn);
+    // if (selectedVpn) {
+    if (vpnState === "disconnected") {
+      VpnServiceModule.startVpn(
+        selectedVpn.config,
+        // selectedVpn.country,
+        'japan',
+        "vpn",
+        "vpn",
+        null,
+        null
+
+      );
+    } else {
+      VpnServiceModule.stopVpn();
+      setVpnState("disconnected");
+      setVpnStatus("Disconnected from VPN");
+    }
+  };
+
+
+
+
+
+
+
+
 
   const handleConnectionToggle = () => {
       if (isConnected) {
@@ -62,7 +139,7 @@ const HomeScreen = ({route}) => {
   const startConnectionAnimation = () => {
       Animated.timing(progress, {
           toValue: 1,
-          duration: 3000, // Animation duration
+          duration: 5000, // Animation duration
           easing: Easing.linear,
           useNativeDriver: false,
       }).start(() => {
@@ -93,59 +170,116 @@ const HomeScreen = ({route}) => {
       }],
   };
 
-  const [location, setLocation] = useState({
-    country: 'United Kingdom',
-    city: 'London',
-    flag: 'GB',
-    signalStrength: 4,
-  });
+  // const [location, setLocation] = useState({
+  //   country: 'United Kingdom',
+  //   city: 'London',
+  //   flag: 'GB',
+  //   signalStrength: 4,
+  // });
 
   // console.log(locationselect)
   React.useEffect(() => {
-    if (route.params?.selectedLocation) {
-      setLocation(route.params.selectedLocation);
+    if (route.params?.selectedVpn) {
+      setLocation(route.params.selectedVpn);
+      setSelectedVpn(route.params.selectedVpn)
+      // console.log('route ka data ------', route.params.selectedVpn )
+    } else {
+      setLocation({
+           country: 'United Kingdom',
+    city: 'London',
+    flag: 'GB',
+    signalStrength: 4,
+      })
     }
-  }, [route.params?.selectedLocation]);
+  }, [route.params?.selectedVpn]);
   return (
     <View style={styles.container}>
-  
+    
+
       <ImageBackground source={Images.Maps} style={styles.drawerBackground}>
         {/* <View style={styles.header}> */}
 
         <CustomHeader
           leftComponent={
             <TouchableOpacity
-              onPress={() => navigation.openDrawer()}
+              // onPress={() => navigation.openDrawer()}
+              onPress={() => navigation.toggleDrawer()} 
               style={{backgroundColor: 'gray', borderRadius: 30, padding: 8}}>
               <Image source={Images.DrawerMenu} />
+              {/* <Image source={require('../assets/images/MenuButton.png')} /> */}
             </TouchableOpacity>
           }
           middleComponent={
             <Image source={Images.Applogo} style={styles.logo} />
           }
-          rightComponent={<Icon name="star" size={30} color="white" />}
+          rightComponent={<Image source={Images.tajIcon} />}
         />
-        <View style={styles.locationContainer}>
 
+     <TouchableOpacity style={styles.button} onPress={startVpn}>
+       <Text style={styles.buttonText}>
+           {vpnState === "disconnected" ? "Connect VPN" : vpnState.toUpperCase()}
+        </Text>
+    </TouchableOpacity>
+
+ {/* Conditionally render content based on whether location is selected */}
+ {location ? (
+          <View style={styles.locationContainer}>
+            {/* <CountryFlag isoCode={location.flag} size={32} /> */}
+            <View style={styles.locationDetails}>
+              <Text style={styles.locationText}>{location.country}</Text>
+              <Text style={styles.cityText}>{location.city}</Text>
+            </View>
+            <Image source={Images.InternetWaves} />
+          </View>
+        ) : (
+          <View style={styles.selectLocationPrompt}>
+            <Text style={styles.selectLocationText}>
+              Please select a location
+            </Text>
+            {/* <TouchableOpacity
+              style={styles.changeLocationButton}
+              onPress={() => navigation.navigate('LocationSelectionScreen')}>
+              <Image source={Images.ChangeLocation} />
+            </TouchableOpacity> */}
+          </View>
+        )}
+        {/* <View style={styles.locationContainer}>
           <CountryFlag isoCode={location.flag} size={32} />
 
           <View style={styles.locationDetails}>
             <Text style={styles.locationText}>{location.country}</Text>
             <Text style={styles.cityText}>{location.city}</Text>
           </View>
-          <Icon name="signal-cellular-alt" size={24} color="green" />
-        </View>
+         
+          <Image source={Images.InternetWaves} />
+        </View> */}
+
+
         <TouchableOpacity
           style={styles.changeLocationButton}
           onPress={() => navigation.navigate('LocationSelectionScreen')}>
-          <Text style={styles.changeLocationText}>Change Location</Text>
-          <Icon name="keyboard-arrow-down" size={20} color="white" />
+       
+          <Image source={Images.ChangeLocation} />
         </TouchableOpacity>
   
         <View style={styles.timerContainer}>
-          <Text style={styles.timerText}>05 : 10 : 25</Text>
-          <Text style={styles.ipText}>Your IP : 221.52.108.213</Text>
+        <Text style={styles.timerText}>{vpnStatus}</Text>
+          {/* <Text style={styles.timerText}>01 : 25 : 40</Text>
+          <Text style={styles.ipText}>Your IP : 51.77.108.159</Text> */}
         </View>
+        {/* <Button
+        title="My Account"
+        onPress={()=>navigation.navigate('MyAccount')}
+      />
+        <Button
+        title="SettingsScreen"
+        onPress={()=>navigation.navigate('SettingsScreen')}
+      />
+        <Button
+        title="Help"
+        onPress={()=>navigation.navigate('Help')}
+      /> */}
+   
         <View style={styles.animationWrapper}>
                 <Animated.View style={[styles.progressCircle, animatedStyle]} />
                 <TouchableOpacity
@@ -154,13 +288,24 @@ const HomeScreen = ({route}) => {
                             ? styles.disconnectButtonMain
                             : styles.connectButtonMain
                     }
-                    onPress={handleConnectionToggle}
-                >
-                    <Icon
-                        name={isConnected ? 'close' : 'power-settings-new'}
-                        size={70}
-                        color="orange"
+              
+
+
+                  onPress={() => {
+                      if (vpnState === "disconnected") {
+                        startVpn(); // Function to connect VPN
+                        handleConnectionToggle();
+                      } else {
+                        startVpn();  // Function to disconnect VPN
+                        handleConnectionToggle();
+                      }
+                    }}
+                  >
+                    <Image
+                      source={vpnState === "disconnected" ? Images.Connect : Images.x}
                     />
+
+
                 </TouchableOpacity>
             </View>
 
@@ -170,7 +315,7 @@ const HomeScreen = ({route}) => {
                 title="Do you want to disconnect?"
                 onConfirm={handleDisconnect}
                 onCancel={closeModal}
-                icon="close"
+                icon="close-o"
             />
         <View
           style={{
@@ -186,12 +331,13 @@ const HomeScreen = ({route}) => {
           {isConnected ? (
             <View style={styles.speedContainer}>
               <View style={styles.speedBox}>
-                <Icon name="arrow-downward" size={20} color="white" />
-                <Text style={styles.speedText}>19.5 MB/s</Text>
+              <Image source={Images.arrowDown} />
+      
+                <Text style={styles.speedText}>62.5 MB/s</Text>
               </View>
               <View style={styles.speedBox}>
-                <Icon name="arrow-upward" size={20} color="white" />
-                <Text style={styles.speedText}>11.2 MB/s</Text>
+              <Image source={Images.arrowUP} />
+                <Text style={styles.speedText}>41.2 MB/s</Text>
               </View>
             </View>
           ) : (
@@ -251,9 +397,9 @@ const styles = StyleSheet.create({
   changeLocationButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffaf1a',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    // backgroundColor: '#ffaf1a',
+    // paddingHorizontal: 20,
+    // paddingVertical: 10,
     borderRadius: 20,
     alignSelf: 'center',
     marginVertical: 20,
@@ -391,6 +537,7 @@ animationWrapper: {
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',
+  marginTop:60
 },
 powerButton: {
   backgroundColor: 'white',
@@ -405,6 +552,29 @@ progressCircle: {
   borderWidth: 8,
   borderColor: 'rgba(255, 255, 255, 0.3)', // Initial white transparent circle
 },
+
+
+
+
+
+
+
+
+
+
+selectLocationPrompt: {
+  alignItems: 'center',
+  justifyContent: 'center',
+  flex: 1,
+},
+selectLocationText: {
+  color: 'orange',
+  fontSize: 20,
+  fontWeight: 'bold',
+},
+
+
+
 });
 
 export default HomeScreen;

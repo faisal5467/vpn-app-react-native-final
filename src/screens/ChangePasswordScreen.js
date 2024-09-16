@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from '../components/Button';
 
-
+ 
 const ChangePasswordScreen = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,6 +21,7 @@ const ChangePasswordScreen = () => {
 
     return (
         <View style={styles.container}>
+            
             <Text style={styles.title}>Change Password</Text>
             <Text style={styles.subtitle}>Regularly changing passwords boosts security</Text>
 

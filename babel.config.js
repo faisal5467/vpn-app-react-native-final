@@ -1,15 +1,17 @@
-// module.exports = {
-//   presets: ['module:metro-react-native-babel-preset'],
-//   plugins: ['react-native-reanimated/plugin',
-//     '@babel/plugin-transform-private-methods',
-//   ],
-// };
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   plugins: [
-    ['@babel/plugin-transform-class-properties', { loose: true }],
-    ['@babel/plugin-transform-private-methods', { loose: true }],
-    ['@babel/plugin-transform-private-property-in-object', { loose: true }],
-    'react-native-reanimated/plugin',
+    'react-native-reanimated/plugin', // Reanimated plugin
+    [
+      'module:react-native-dotenv',   // dotenv plugin, uncomment if needed
+      {
+        moduleName: '@env',
+        path: '.env',
+        blacklist: null,
+        whitelist: null,
+        safe: false,
+        allowUndefined: true,
+      },
+    ],
   ],
 };

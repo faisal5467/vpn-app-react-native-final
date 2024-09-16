@@ -12,9 +12,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import CustomHeader from '../components/CustomHeader';
 import Button from '../components/Button';
-import Images from '../constant/Images';
+
 import {useNavigation} from '@react-navigation/native';
 import CustomModal from '../components/CustomModal';
+import Images from '../constants/Image';
 
 const MyAccount = () => {
   const navigation = useNavigation();
@@ -52,7 +53,8 @@ const MyAccount = () => {
       <CustomHeader
         leftComponent={
           <TouchableOpacity
-            onPress={() => navigation.openDrawer()}
+            // onPress={() => navigation.openDrawer()}
+            onPress={() => navigation.toggleDrawer()} 
             style={{backgroundColor: 'gray', borderRadius: 30, padding: 8}}>
             <Image source={Images.DrawerMenu} />
           </TouchableOpacity>

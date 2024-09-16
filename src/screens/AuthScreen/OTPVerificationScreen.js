@@ -9,7 +9,7 @@ const OTPVerificationScreen = ({ navigation }) => {
     const [error, setError] = useState('');
     const [resendAvailable, setResendAvailable] = useState(false);
 
-    const handleOtpChange = (code) => {
+    const handleOtpChange = (code) => { 
         setOtp(code);
         setError(''); // Clear error when user is typing
     };
