@@ -56,12 +56,7 @@ const questions = [
     answer:
       'To reset your password, tap "Forgot Password" on the login screen and follow the instructions. You will receive an email with a link to reset your password.',
   },
-  {
-    id: "8",
-    question: "How do I activate VPN connection on my device?",
-    answer:
-      "To activate the VPN connection, open the app, select a server location, and tap the connect button. Once connected, the VPN icon will appear in your device’s status bar.",
-  },
+
 ];
 
 const Help = ({ navigation }) => {
