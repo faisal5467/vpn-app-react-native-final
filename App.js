@@ -309,7 +309,7 @@
 // //         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
 // //         <Stack.Screen name="AboutApp" component={AboutApp} />
 // //         <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-// //         <Stack.Screen name="Help" component={Help} />
+
 
 // //       </Stack.Navigator>
 // //     </NavigationContainer>
