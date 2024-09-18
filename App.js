@@ -310,7 +310,7 @@
 // //         <Stack.Screen name="AboutApp" component={AboutApp} />
 // //         <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
 // //         <Stack.Screen name="Help" component={Help} />
-// //         <Stack.Screen name="HelpDetailScreen" component={HelpDetailScreen} />
+
 // //       </Stack.Navigator>
 // //     </NavigationContainer>
 // //   );
