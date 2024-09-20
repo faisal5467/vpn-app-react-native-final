@@ -177,12 +177,12 @@ const HomeScreen = ({route}) => {
   //   signalStrength: 4,
   // });
 
-  // console.log(locationselect)
+
   React.useEffect(() => {
     if (route.params?.selectedVpn) {
       setLocation(route.params.selectedVpn);
       setSelectedVpn(route.params.selectedVpn)
-      // console.log('route ka data ------', route.params.selectedVpn )
+
     } else {
       setLocation({
            country: 'United Kingdom',
@@ -206,7 +206,7 @@ const HomeScreen = ({route}) => {
               onPress={() => navigation.toggleDrawer()} 
               style={{backgroundColor: 'gray', borderRadius: 30, padding: 8}}>
               <Image source={Images.DrawerMenu} />
-              {/* <Image source={require('../assets/images/MenuButton.png')} /> */}
+             
             </TouchableOpacity>
           }
           middleComponent={
@@ -221,10 +221,9 @@ const HomeScreen = ({route}) => {
         </Text>
     </TouchableOpacity>
 
- {/* Conditionally render content based on whether location is selected */}
  {location ? (
           <View style={styles.locationContainer}>
-            {/* <CountryFlag isoCode={location.flag} size={32} /> */}
+        
             <View style={styles.locationDetails}>
               <Text style={styles.locationText}>{location.country}</Text>
               <Text style={styles.cityText}>{location.city}</Text>
