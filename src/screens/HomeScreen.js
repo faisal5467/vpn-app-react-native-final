@@ -263,21 +263,9 @@ const HomeScreen = ({route}) => {
   
         <View style={styles.timerContainer}>
         <Text style={styles.timerText}>{vpnStatus}</Text>
-          {/* <Text style={styles.timerText}>01 : 25 : 40</Text>
-          <Text style={styles.ipText}>Your IP : 51.77.108.159</Text> */}
+       
         </View>
-        {/* <Button
-        title="My Account"
-        onPress={()=>navigation.navigate('MyAccount')}
-      />
-        <Button
-        title="SettingsScreen"
-        onPress={()=>navigation.navigate('SettingsScreen')}
-      />
-        <Button
-        title="Help"
-        onPress={()=>navigation.navigate('Help')}
-      /> */}
+      
    
         <View style={styles.animationWrapper}>
                 <Animated.View style={[styles.progressCircle, animatedStyle]} />
