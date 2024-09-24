@@ -723,7 +723,7 @@ M7muBbF0XN7VO80iJPv+PmIZdEIAkpwKfi201YB+BafCIuGxIF50Vg==
             onPress={() => handleLocationSelect(item)}
         >
             <View style={styles.locationInfo}>
-                {/* <CountryFlag isoCode={item.CountryShort} size={32} /> */}
+             
                 <View style={styles.locationDetails}>
                     <Text style={styles.locationText}>{item.CountryLong}</Text>
                     <Text style={styles.cityText}>{item.HostName}</Text>
