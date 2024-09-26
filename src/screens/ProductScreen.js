@@ -6,7 +6,7 @@ const ProductScreen = () => {
   return (
    
     <View>
-   <Text>ProductScreen</Text>
+
     <Button title="Go to Products details" onPress={() => navigation.navigate('ProductDetailScreen')} />
   </View>
   )

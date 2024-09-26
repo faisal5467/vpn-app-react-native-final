@@ -754,7 +754,18 @@ M7muBbF0XN7VO80iJPv+PmIZdEIAkpwKfi201YB+BafCIuGxIF50Vg==
                     renderItem={renderVpnItem}
                     contentContainerStyle={styles.listContainer}
                 />
-           
+            {/* {loading ? (
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <ActivityIndicator size="large" color="orange" />
+                </View>
+            ) : (
+                <FlatList
+                    data={vpnList}
+                    keyExtractor={(item) => item.HostName}
+                    renderItem={renderVpnItem}
+                    contentContainerStyle={styles.listContainer}
+                />
+            )} */}
              <TouchableOpacity style={styles.reloadButton} onPress={reloadServers}>
         <Text style={styles.buttonText}>Reload</Text>
       </TouchableOpacity>
