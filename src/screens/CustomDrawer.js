@@ -89,7 +89,7 @@
 //       >
 //         <View style={{ flexDirection: "row", marginTop: 50 }}>
 //           <TouchableOpacity
-//             style={{ marginLeft: 15 }}
+//             style={{ marginLeft: 20 }}
 //             onPress={toggleMenu}
 //           >
 //             <Image source={Images.DrawerMenu} />
