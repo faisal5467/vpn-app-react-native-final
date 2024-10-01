@@ -22,6 +22,8 @@ const Images = {
     arrowUP: require("../assets/images/arrowUP.png"),
     arrowDown: require("../assets/images/arrowDown.png"),
     Search: require("../assets/images/Search.png"),
+    QuestionCircle: require("../assets/images/QuestionCircle.png"),
+    CrownLine: require("../assets/images/CrownLine.png"),
     // worldMapBkg: require("../assets/images/world-map-bkg.png"),
 
 };

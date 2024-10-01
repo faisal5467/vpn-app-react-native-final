@@ -404,6 +404,7 @@ import CountryFlag from 'react-native-country-flag';
 import Papa from 'papaparse';
 import Images from '../constants/Image';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const LocationSelectionScreen = ({ navigation }) => {
     const [search, setSearch] = useState('');
     const [vpnServers, setVpnServers] = useState([]);
@@ -411,24 +412,65 @@ const LocationSelectionScreen = ({ navigation }) => {
     const [selectedVpn, setSelectedVpn] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // const getVPNServers = async () => {
+    //     console.log('call')
+    //     setLoading(true);
+    //     try {
+    //         const response = await fetch('http://www.vpngate.net/api/iphone/');
+    //         if (!response.ok) throw new Error('Network response was not ok');
+    //         const data = await response.text();
+
+    //         const parts = data.split('#');
+    //         if (parts.length < 2) {
+    //             throw new Error('Unexpected data format');
+    //         }
+
+    //         const csvString = parts[1].split('*').join('');
+    //         Papa.parse(csvString, {
+    //             header: false,
+    //             skipEmptyLines: true,
+    //             complete: (results) => {
+    //                 const csvList = results.data;
+    //                 const header = csvList[0];
+    //                 const servers = csvList.slice(1).map((row) => {
+    //                     const tempJson = {};
+    //                     for (let j = 0; j < header.length; j++) {
+    //                         tempJson[header[j]] = row[j];
+    //                     }
+    //                     return tempJson;
+    //                 });
+    //                 // setVpnServers(servers);
+    //                 // console.log('----------servers', servers)
+    //                 setFilteredVpnServers(servers);
+    //                 setLoading(false); // Hide loading spinner after fetching
+    //             },
+    //         });
+    //     } catch (error) {
+    //         console.error('Error fetching or processing data:', error);
+    //         setLoading(false); // Hide loading spinner on error
+    //     }
+    // };
+
+
+
     const getVPNServers = async () => {
-        console.log('call')
+        console.log('call');
         setLoading(true);
         try {
             const response = await fetch('http://www.vpngate.net/api/iphone/');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.text();
-
+    
             const parts = data.split('#');
             if (parts.length < 2) {
                 throw new Error('Unexpected data format');
             }
-
+    
             const csvString = parts[1].split('*').join('');
             Papa.parse(csvString, {
                 header: false,
                 skipEmptyLines: true,
-                complete: (results) => {
+                complete: async (results) => {
                     const csvList = results.data;
                     const header = csvList[0];
                     const servers = csvList.slice(1).map((row) => {
@@ -438,9 +480,22 @@ const LocationSelectionScreen = ({ navigation }) => {
                         }
                         return tempJson;
                     });
-                    setVpnServers(servers);
-                    console.log('----------servers', servers)
-                    // setFilteredVpnServers(servers);
+    
+                    // Fetch region data for each server based on IP
+                    const serversWithRegion = await Promise.all(
+                        servers.map(async (server) => {
+                            const ip = server.IP; // Extract IP from server
+                            if (ip) {
+                                const regionResponse = await fetch(`https://ipinfo.io/${ip}/json`);
+                                const regionData = await regionResponse.json();
+                                // Combine the original server data with the region data
+                                return { ...server, region: regionData.region };
+                            }
+                            return server; // Return the server as-is if no IP
+                        })
+                    );
+                    // console.log('SERVER-----------------', serversWithRegion)
+                    setFilteredVpnServers(serversWithRegion);
                     setLoading(false); // Hide loading spinner after fetching
                 },
             });
@@ -449,10 +504,12 @@ const LocationSelectionScreen = ({ navigation }) => {
             setLoading(false); // Hide loading spinner on error
         }
     };
-
+    
     useEffect(() => {
         getVPNServers();
     }, []);
+
+
   const reloadServers = () => {
     getVPNServers();
   };
@@ -480,6 +537,52 @@ const LocationSelectionScreen = ({ navigation }) => {
     setVpnList(vpnList);
     // setSelectedVpn(vpnList[0]);
   };
+
+
+
+
+
+
+  // Utility to determine signal strength based on speed
+  const getSignalStrength = (speed) => {
+    if (speed > 100000000) {
+      return 4; // Strong signal
+    } else if (speed > 50000000) {
+      return 3; // Good signal
+    } else if (speed > 10000000) {
+      return 2; // Moderate signal
+    } else {
+      return 1; // Weak signal
+    }
+  };
+
+  // Dynamically calculate signal strength
+  const signalStrength = filteredVpnServers ? getSignalStrength(filteredVpnServers.Speed) : 1;
+
+  // Function to render signal bars based on signal strength
+  const renderSignalBars = (signalStrength) => {
+    const bars = [];
+    for (let i = 1; i <= 4; i++) {
+      bars.push(
+        <View
+          key={i}
+          style={[
+            styles.signalBar,
+            { height: 10 * i },
+            // { opacity: i <= signalStrength ? 1 : 0.1 } // Dim the bars based on signal strength
+            i <= signalStrength ? styles.activeBar : styles.inactiveBar,
+        ]}
+        />
+      );
+    }
+    return bars;
+  };
+  
+
+
+
+
+
 
   const fetchConfigFile = async () => {
     return configFile;
@@ -702,72 +805,105 @@ M7muBbF0XN7VO80iJPv+PmIZdEIAkpwKfi201YB+BafCIuGxIF50Vg==
 
 
 
-    // const handleSearch = (text) => {
-    //     setSearch(text);
-    //     const filtered = vpnServers.filter((vpn) => {
-    //         const country = vpn.CountryLong ? vpn.CountryLong.toLowerCase() : '';
-    //         const ip = vpn.IP ? vpn.IP.toLowerCase() : '';
-    //         return country.includes(text.toLowerCase()) || ip.includes(text.toLowerCase());
-    //     });
-    //     setFilteredVpnServers(filtered);
-    // };
+    const handleSearch = (text) => {
+        
+        setSearch(text);
+        const filtered = filteredVpnServers.filter((vpn) => {
+            const country = vpn.CountryLong ? vpn.CountryLong.toLowerCase() : '';
+            const ip = vpn.IP ? vpn.IP.toLowerCase() : '';
+            return country.includes(text.toLowerCase()) || ip.includes(text.toLowerCase());
+        });
+        setFilteredVpnServers(filtered);
+    };
 
     const handleLocationSelect = (location) => {
+        
         setSelectedVpn(location);
         navigation.navigate('HomeScreen', { selectedVpn: location });
     };
 
-    const renderVpnItem = ({ item }) => (
-        <TouchableOpacity
-            style={[styles.locationItem, selectedVpn?.HostName === item.HostName && styles.selectedLocationItem]}
-            onPress={() => handleLocationSelect(item)}
-        >
-            <View style={styles.locationInfo}>
-                {/* <CountryFlag isoCode={item.CountryShort} size={32} /> */}
-                <View style={styles.locationDetails}>
-                    <Text style={styles.locationText}>{item.CountryLong}</Text>
-                    <Text style={styles.cityText}>{item.HostName}</Text>
-                </View>
-            </View>
-            <Image source={Images.InternetWaves} />
+    // const renderVpnItem = ({ item }) => (
+    //     <TouchableOpacity
+    //         style={[styles.locationItem, selectedVpn?.HostName === item.HostName && styles.selectedLocationItem]}
+    //         onPress={() => handleLocationSelect(item)}
+    //     >
+    //         <View style={styles.locationInfo}>
+    //             <CountryFlag isoCode={item.CountryShort} size={32} />
+    //             <View style={styles.locationDetails}>
+    //                 <Text style={styles.locationText}>{item.CountryLong}</Text>
+    //                 <Text style={styles.cityText}>{item.HostName}</Text>
+    //             </View>
+    //         </View>
+    //         <Image source={Images.InternetWaves} />
           
-        </TouchableOpacity>
-    );
+    //     </TouchableOpacity>
+    // );
 
+
+    const renderVpnItem = ({ item }) => {
+        // Calculate the signal strength for the current item
+        const signalStrength = item ? getSignalStrength(item.Speed) : 1;
+      
+        return (
+          <TouchableOpacity
+            style={[
+              styles.locationItem,
+              selectedVpn?.HostName === item.HostName && styles.selectedLocationItem
+            ]}
+            onPress={() => handleLocationSelect(item)}
+          >
+            <View style={styles.locationInfo}>
+              <CountryFlag isoCode={item.CountryShort} size={32} />
+              <View style={styles.locationDetails}>
+                <Text style={styles.locationText}>{item.CountryLong}</Text>
+                <Text style={styles.cityText}>{item.region}</Text>
+              </View>
+            </View>
+            {/* Render the signal bars based on signal strength */}
+            <View style={styles.signalBarsContainer}>
+              {renderSignalBars(signalStrength)}
+            </View>
+          </TouchableOpacity>
+        );
+      };
+      
+      
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Change Location</Text>
             <View style={styles.searchContainer}>
             <Image source={Images.Search} />
-                {/* <Icon name="search" size={24} color="white" style={styles.searchIcon} /> */}
-                {/* <TextInput
+          
+                <TextInput
                     style={styles.searchInput}
                     placeholder="Search"
                     placeholderTextColor="#888"
                     value={search}
                     onChangeText={handleSearch}
-                /> */}
+                />
             </View>
-            <FlatList
+            {/* <FlatList
                     data={vpnList}
                     keyExtractor={(item) => item.HostName}
                     renderItem={renderVpnItem}
                     contentContainerStyle={styles.listContainer}
-                />
-            {/* {loading ? (
+                /> */}
+            {loading ? (
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                     <ActivityIndicator size="large" color="orange" />
                 </View>
             ) : (
                 <FlatList
-                    data={vpnList}
+                    data={filteredVpnServers}
                     keyExtractor={(item) => item.HostName}
                     renderItem={renderVpnItem}
                     contentContainerStyle={styles.listContainer}
                 />
-            )} */}
+            )}
              <TouchableOpacity style={styles.reloadButton} onPress={reloadServers}>
-        <Text style={styles.buttonText}>Reload</Text>
+        {/* <Text style={styles.buttonText}>Reload</Text> */}
+        
+        <Ionicons name="reload-circle" color={'orange'} size={60} />
       </TouchableOpacity>
         </View>
     );
@@ -835,15 +971,38 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     right: 20,
-    backgroundColor: "#007BFF",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
+    // backgroundColor: "orange",
+    borderRadius: 40,
   },
   buttonText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "bold",
+  },
+
+
+
+
+   // Container for the signal bars
+   signalBarsContainer: {
+    flexDirection: 'row',
+
+    alignItems: 'flex-end',
+    marginTop: 1,
+  },
+  // Single signal bar style
+  signalBar: {
+    width: 6,
+    // height: 20,
+    backgroundColor: '#00ff00', // Green bars
+    marginHorizontal: 2,
+  },
+
+  activeBar: {
+    backgroundColor: 'green',
+  },
+  inactiveBar: {
+    backgroundColor: '#ccc',
   },
 });
 

@@ -64,14 +64,14 @@ const CustomDrawerContent = (props) => {
               resizeMode="contain"
             />
           )}
-          onPress={() => props.navigation.navigate("SettingsScreen")}
+          onPress={() => props.navigation.navigate("SettingStackNavigator")}
           labelStyle={styles.drawerLabel}
         />
         <DrawerItem
           label="Help"
           icon={() => (
             <Image
-            source={Images.Settings} // Path to your image
+            source={Images.QuestionCircle} // Path to your image
             style={{ width: 24, height: 24 }} // Adjust size according to your needs
             resizeMode="contain"
           />
@@ -86,8 +86,11 @@ const CustomDrawerContent = (props) => {
         <TouchableOpacity
           style={styles.premiumButton}
           onPress={() => alert("Go to Premium clicked!")}
-        >
-          <Ionicons name="crown-outline" size={24} color="white" />
+        > 
+          <Image
+              source={Images.CrownLine} // Path to your image
+              
+            />
           <Text style={styles.premiumButtonText}>Go to Premium</Text>
         </TouchableOpacity>
       </View>
@@ -125,19 +128,20 @@ const styles = StyleSheet.create({
   premiumButtonSection: {
     paddingHorizontal: 20,
     paddingBottom: 30,
+    alignItems:'center',
   },
   premiumButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#ffcc00",
+    backgroundColor: "white",
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 35,
   },
   premiumButtonText: {
-    color: "white",
+    color: "#ffcc00",
     marginLeft: 10,
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 18,
+    fontWeight: "900",
   },
 });
 
