@@ -586,7 +586,7 @@ const LocationSelectionScreen = ({ navigation }) => {
 
   const fetchConfigFile = async () => {
     return configFile;
-
+// / return
   };
   const configFile = `###############################################################################
 # OpenVPN 2.0 Sample Configuration File
