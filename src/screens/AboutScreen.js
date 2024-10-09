@@ -4,7 +4,7 @@ import React from 'react'
 const AboutScreen = () => {
   return (
     <View>
-      <Text>AboutScreen</Text>
+      <Text>AboutScreen for detaials</Text>
     </View>
   )
 }

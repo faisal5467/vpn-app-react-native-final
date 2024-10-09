@@ -481,12 +481,6 @@ M7muBbF0XN7VO80iJPv+PmIZdEIAkpwKfi201YB+BafCIuGxIF50Vg==
 `
 
 
-
-
-
-
-
-  // Utility to determine signal strength based on speed
   const getSignalStrength = (speed) => {
     if (speed > 100000000) {
       return 4; // Strong signal
