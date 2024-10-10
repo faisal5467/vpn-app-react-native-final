@@ -62,6 +62,12 @@ const questions = [
     answer:
       "To activate the VPN connection, open the app, select a server location, and tap the connect button. Once connected, the VPN icon will appear in your device’s status bar.",
   },
+  {
+    id: "9",
+    question: "Is this secure?",
+    answer:
+      "Yes it's totaly secure",
+  },
 ];
 
 const Help = ({ navigation }) => {
