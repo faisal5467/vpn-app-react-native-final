@@ -18,7 +18,7 @@ const AboutApp = ({ navigation }) => {
                     </TouchableOpacity>
                 }
                 middleComponent={
-                    <Text style={{ color: 'orange', fontSize: 22, fontWeight: '700' }}>About App</Text>
+                    <Text style={{ color: 'orange', fontSize: 21, fontWeight: '700' }}>About App</Text>
                 }
             />
 
