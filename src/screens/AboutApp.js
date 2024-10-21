@@ -18,13 +18,13 @@ const AboutApp = ({ navigation }) => {
                     </TouchableOpacity>
                 }
                 middleComponent={
-                    <Text style={{ color: 'orange', fontSize: 21, fontWeight: '700' }}>About App</Text>
+                    <Text style={{ color: 'orange', fontSize: 21, fontWeight: '600' }}>About App</Text>
                 }
             />
 
             <View style={styles.content}>
                 <Text style={styles.settingText}>
-                Lorem Ipsum is simply dummy is simply dummy text of the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                Lorem Ipsum is simply dummy is simply dummy text of industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                 </Text>
             </View>
 
