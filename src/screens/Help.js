@@ -58,7 +58,7 @@ const questions = [
   },
   {
     id: "8",
-    question: "How do I activate VPN connection on my device",
+    question: "How do I activate VPN connection on my device?",
     answer:
       "To activate the VPN connection, open the app, select a server location, and tap the connect button. Once connected, the VPN icon will appear in your device’s status bar.",
   },

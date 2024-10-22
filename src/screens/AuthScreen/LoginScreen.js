@@ -7,9 +7,7 @@
 //   StyleSheet,
 //   ScrollView,
 // } from 'react-native';
-// import CheckBox from '@react-native-community/checkbox';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-// import Button from '../../components/Button';
+
 
 // const LoginScreen = ({navigation}) => {
 //   const [fullName, setFullName] = useState('');
