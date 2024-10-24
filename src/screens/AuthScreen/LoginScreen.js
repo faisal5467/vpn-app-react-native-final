@@ -206,7 +206,7 @@ const LoginScreen = ({ navigation }) => {
         } else {
           setDeviceId(id); // If it's a plain string, set it directly
         }
-        console.log("Device ID fetched:", id);
+        console.log("Device id:", id);
       } catch (error) {
         console.error("Failed to fetch device ID:", error);
       }
