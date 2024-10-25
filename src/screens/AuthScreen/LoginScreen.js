@@ -208,7 +208,7 @@ const LoginScreen = ({ navigation }) => {
         }
         console.log("Device id:", id);
       } catch (error) {
-        console.error("Failed to fetch device ID:", error);
+        console.error("Failed to fetch D:", error);
       }
     };
 
@@ -218,7 +218,7 @@ const LoginScreen = ({ navigation }) => {
   //   console.log('test')
   //   GoogleSignin.configure({
   //     webClientId:
-  //       "69377085199-1o9q6cmm27hb6l0810oujabd10mepn38.apps.googleusercontent.com",
+  //       "69377085199-1o9q6cmm27hb6l0810oujabddevice I10mepn38.apps.googleusercontent.com",
   //   }); 
   // },[isFocused])
 
