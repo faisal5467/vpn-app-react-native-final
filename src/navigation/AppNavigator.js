@@ -13,9 +13,6 @@ const AppNavigator = () => (
     <Drawer.Screen name="MainNavigator" component={MainNavigator} />
     <Drawer.Screen name="SettingsScreen" component={SignupScreen} />
 
-
-  
-    {/* Add more drawer items here */}
   </Drawer.Navigator>
 );
 
