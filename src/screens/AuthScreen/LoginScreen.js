@@ -200,7 +200,7 @@ const LoginScreen = ({ navigation }) => {
       try {
         // Fetch the device ID
         const id = await DeviceInfo.getUniqueId();
-        // Check if id is an object and extract the value
+
         if (id && typeof id === "object" && "_j" in id) {
           setDeviceId(id._j); // Extract the device ID
         } else {
