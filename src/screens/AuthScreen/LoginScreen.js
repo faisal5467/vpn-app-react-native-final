@@ -198,11 +198,11 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchDeviceId = async () => {
       try {
-        // Fetch the device ID
+       
         const id = await DeviceInfo.getUniqueId();
 
         if (id && typeof id === "object" && "_j" in id) {
-          setDeviceId(id._j); // Extract the device ID
+          setDeviceId(id._j);
         } else {
           setDeviceId(id); // If it's a plain string, set it directly
         }
