@@ -239,12 +239,7 @@ const LoginScreen = ({ navigation }) => {
 
   // const [isMounted, setIsMounted] = useState(false);
 
-  // useEffect(() => {
-  //   setIsMounted(true);
-  //   return () => {
-  //     setIsMounted(false); // Set the flag to false on unmount
-  //   };
-  // }, []);
+
   useEffect(() => {
  console.log('call')
   }, [isFocused]);
