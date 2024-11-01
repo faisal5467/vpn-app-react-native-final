@@ -237,8 +237,7 @@ const LoginScreen = ({ navigation }) => {
 
 
 
-  // const [isMounted, setIsMounted] = useState(false);
-
+ 
 
   useEffect(() => {
  console.log('call')
