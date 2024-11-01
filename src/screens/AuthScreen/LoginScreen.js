@@ -230,9 +230,9 @@ const LoginScreen = ({ navigation }) => {
   //   }); 
   // }
   // const handleSignin = () => {
-  //   console.log("login press");
+
   //   navigation.navigate("MainDrawer");
-  //   // Add signup logic here
+
   // };
 
 
