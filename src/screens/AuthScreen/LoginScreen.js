@@ -222,13 +222,7 @@ const LoginScreen = ({ navigation }) => {
   //   }); 
   // },[isFocused])
 
-  // const googlefunction = () =>{
-  //   console.log('call')
-  //   GoogleSignin.configure({
-  //     webClientId:
-  //       "69377085199-1o9q6cmm27hb6l0810oujabd10mepn38.apps.googleusercontent.com",
-  //   }); 
-  // }
+
 
 
 
