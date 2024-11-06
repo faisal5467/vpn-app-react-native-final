@@ -264,12 +264,6 @@ const LoginScreen = ({ navigation }) => {
       console.log('User logged in:', userCredential.user);
 
 
-       // Wait for Snackbar to show, then navigate
-      //  setTimeout(() => {
-      //   if (isMounted) {
-      //     setIsMounted(false);
-      //   }
-      // }, 3000);
     } catch (error) {
       console.log('Login error: ', error);
 
