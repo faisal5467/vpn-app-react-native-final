@@ -267,7 +267,6 @@ const LoginScreen = ({ navigation }) => {
     } catch (error) {
       console.log('Login error: ', error);
 
-      // Handle Firebase authentication errors
       if (error.code === 'auth/user-not-found') {
         setErrorMessage('No account found with this email.');
       } else if (error.code === 'auth/wrong-password') {
