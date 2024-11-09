@@ -374,7 +374,7 @@ const LoginScreen = ({ navigation }) => {
 
   // const onGoogleButtonPress = async () => {
   //   setLoading(true);
-  //   // googlefunction();
+
   //   try {
   //     GoogleSignin.configure({
   //       webClientId: '69377085199-1o9q6cmm27hb6l0810oujabd10mepn38.apps.googleusercontent.com',
