@@ -380,7 +380,7 @@ const LoginScreen = ({ navigation }) => {
   //       webClientId: '69377085199-1o9q6cmm27hb6l0810oujabd10mepn38.apps.googleusercontent.com',
   //     });
       
-  //     // Sign out of any previous Google account
+
   //     await GoogleSignin.signOut();
   
   //     // Check if your device supports Google Play
@@ -457,7 +457,7 @@ const LoginScreen = ({ navigation }) => {
   const onGoogleButtonPress = async () => {
     setLoading(true);
     try {
-      // Configure Google Sign-In
+
       GoogleSignin.configure({
         webClientId: '69377085199-1o9q6cmm27hb6l0810oujabd10mepn38.apps.googleusercontent.com',
       });
